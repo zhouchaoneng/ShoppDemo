@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 持久层接口包名，加接口名 -->
+<mapper namespace="cn.tedu.ssm.mapper.AddressMapper">
+	
+	<!-- 新增收货地址信息 -->
+	<!-- addNewAddress -->
+	<insert id="addNewAddress">
+	INSERT INTO
+	 	address(
+	 	uid,aName,province,
+	 	province_code,city,city_code,
+	 	area,area_code,zip,addres,phone
+	 	,teg,is_dfull,g_phone,creator,
+		establish_time,last_modifier,
+	 	last_amend_time
+	 	)
+	 VALUES(
+	 	#{uid},#{aName},#{province},
+	 	#{province_code},#{city},#{city_code},
+	 	#{area},#{area_code},#{zip},
+	 	#{addres},#{phone},#{teg},
+	 	#{is_dfull},#{g_phone},#{creator},
+	 	#{establishTime},#{lastModifier},
+	 	#{lastAmendTime})
+	</insert>
+	
+	<!--修改收货地址-->
+	<!-- updateAddress -->
+	<update id="updateAddress">
+	UPDATE
+		address
+	SET
+			aName=#{aName},province=#{province},
+			city=#{city},area=#{area},
+			zip=#{zip},addres=#{addres},
+			phone=#{phone},g_phone=#{g_phone}
+	WHERE
+		aid=#{aid}
+	</update>
+	
+	<!--设置为默认 -->
+	<!-- updateByAid -->
+	<update id="updateByAid">
+	UPDATE
+		address
+	SET
+		is_dfull=#{is_dfull}
+	WHERE
+		aid=#{aid}
+	</update>
+	
+	<!--设置不默认 -->
+	<!-- updateByAid -->
+	<update id="updateAtAid">
+	UPDATE
+		address
+	SET
+		is_dfull=#{is_dfull}
+	WHERE
+		aid!=#{aid}
+	</update>
+		
+	<!-- 删除指定aid -->
+	<!-- 返回受影响的行数 -->
+	<delete id="deleteAddress">
+	DELETE
+	FROM
+		address
+	WHERE
+		aid=#{aid}
+	</delete>
+	<!--查询所有的收货地址信息  -->
+	<!-- findAddrress -->
+	<select id="findAddrress" resultType="cn.tedu.ssm.entity.Address">
+	SELECT
+		*
+	FROM
+		address
+	WHERE
+		uid=#{uid}
+	ORDER BY
+		is_dfull
+	</select>
+</mapper>
+
+

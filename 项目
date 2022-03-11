@@ -1,0 +1,75 @@
+1：项目数据分类:用户,商品类别,商品,收藏,订单,购物车,收货地址
+需要设计对应的数据表储存数据。  
+  
+2：排序数据处理的优先级,1：用户:2：收货地址3：>4：商品类别:
+5：商品:6：收藏:7：购物车:8：订单  
+     
+3：数据操作顺序:1：增:2：查:3：删:4：改
+
+4:开发流程,1数据表创建,2创建实体类,3持久层,4业务层,5控制器层,6前端页面
+1:实体类包名.entity,2:持久层包名.mapper,3:业务包名.business,
+4:控制器层.controller,5工具包.util,6异常包:exception,7:过滤器包: 8:AOP包切面:aop
+
+5:设计数据表:1:添加注解COMMENT,2：设计名称,3:设计类型,4:添加约束
+历史数据，创建人，修改人，修改时间，创建时间，应该添加实时数据。
+
+6:实体类需要重写一个主键的hashcode让Tomcat容器区分不同的实例.
+
+7:需要实现序列化接口
+
+8:需要给对应的batis的xml文件sql添加二个注解,一个是该sql的作用,二个持久层方法
+
+9：业务层抽象方法设计:
+1返回值:仅已操作成功设计返回值
+2:方法名体现业务:reg... login...
+3:参数:一定是客户端提交的数据,或者Session中数据,且足够调用持久层方法.
+4:操作失败抛出异常.
+
+10:规划异常类：考虑业务处理中可能产生的异常,增删改，会出现异常，创建对应的异常类
+
+11：业务层实现类业务层包下创建一个子包.
+
+12：密码使用m5加密算法保存
+
+13：设计一个异常处理控制器类,
+异常处理的父类需要是public的，否则无法帮子类捕获异常
+
+14:高版本的Tomcat静态资源乱码处理在Servers/web.xml文件中修改,
+过滤器会影响js资源显示
+
+
+15:使用ajax点击提交,不能使用submit的提交input需要使用button
+用户登录
+1:从数据库中根据用户提交的账号密码参数查询,2查询是否删除未删除状态,
+1:设计持久层,
+
+16：ajax当需要向服务器获取数据使用get请求,如果是提交某些参数使用post
+
+17使用拦截器无法拦截html页面,需要使用过滤器
+
+18:文件上传功能需要依赖
+1:SpringMvc的jar包,
+2:添加文件上传jar依赖:meven会添加2个依赖
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+3:上传文件的控件html：<input type="file">
+4:<from method  enctype="multipart/form-data">
+表单必须是post请求加enctype属性,文件上传必须添加
+5:在Spring配置文件中添加文件上传处理器bean配置:
+<!-- 文件上传,id值固定不能变 -->
+<bean id="multipartResolver" 
+class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+6:控制器接收的类型必须是MultipartFile 对象;
+
+7:ajax上传头像功能与普通ajax有区别,
+1:发送的参数数据需要new FormDate(
+2:添加新的属性配置:
+1："contenType":false  文档类型不让ajax处理
+2："processData":false  防止ajax处理图片数据
+3:保存在Tomcat路径的图片不能使用相同名字,否则会延迟更新修改后的效果
+
+8:省市区显示

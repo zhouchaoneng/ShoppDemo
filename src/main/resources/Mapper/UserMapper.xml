@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 持久层接口包名，加接口名 -->
+<mapper namespace="cn.tedu.ssm.mapper.UserMapper">
+	
+	
+	<!--添加新的用户信息  -->
+	<!--Integer  addNewUser(User user);  -->
+	<insert id="addNewUser">
+	 INSERT INTO
+	 	user(
+	 	username,salt_value,password,
+	 	gender,pthone,is_delete,
+	 	avatar,email,creator,
+		establish_time,last_modifier,
+	 	last_amend_time
+	 	)
+	 VALUES(
+	 	#{username},#{saltValue},#{password},
+	 	#{gender},#{pthone},#{isDelete},
+	 	#{avatar},#{email},#{creator},
+	 	#{establishTime},#{lastModifier},
+	 	#{lastAmendTime})
+	</insert>
+
+	<!--修改密码操作  -->
+	<!-- updatePwd -->
+	<update id="updatePwd">
+	UPDATE
+		user
+	SET
+		password=#{password}
+	WHERE
+		uid=#{uid}
+	</update>
+	
+	<!--修改个人资料  -->
+	<!--  updateUserMessage -->
+	<update id="updateUserMessage">
+	UPDATE
+		user
+	SET
+		email=#{email},pthone=#{pthone},
+		gender=#{gender}
+	WHERE
+		uid=#{uid}
+	</update>
+	
+	<!--上传头像  -->
+	<!--  updateUserMessage -->
+	<update id="updataUpload">
+	UPDATE
+		user
+	SET
+		avatar=#{avatar}
+	WHERE
+		uid=#{uid}
+	</update>
+	
+	<!--查询用户名是否存在  -->
+	<!--User findByName(String name);-->
+	<select id="findByName"  resultType="cn.tedu.ssm.entity.User">
+	SELECT 
+		uid,username,salt_value AS saltValue,password,
+	 	gender,pthone,is_delete AS isDelete,
+	 	avatar,email,creator,
+		establish_time AS establishTime,last_modifier AS lastModifier,
+	 	last_amend_time AS lastAmendTime
+	FROM
+	    user
+	WHERE
+		username=#{username}
+	</select>
+	
+	<!--查询用户名和密码,isDelete为0  -->
+	<!--findByNameAndPwd-->
+	<select id="findByNameAndPwd"  resultType="cn.tedu.ssm.entity.User">
+	SELECT 
+		*
+	FROM
+	    user
+	WHERE
+		username=#{username}
+	AND	
+		password=#{password}
+	AND
+		is_delete=0
+	</select>
+	
+	<!-- 根据uid查询用户名 -->
+	<!-- findByUid -->
+	<select id="findByUid"  resultType="java.lang.String">
+	SELECT
+		username
+	FROM
+	    user
+	WHERE
+		uid=#{uid}
+	</select>
+	
+	
+</mapper>
+
+

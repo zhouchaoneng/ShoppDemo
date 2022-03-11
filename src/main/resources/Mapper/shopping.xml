@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 持久层接口包名，加接口名 -->
+<mapper namespace="cn.tedu.ssm.mapper.ShoppingMapper">
+	
+	<!-- 回填商品 -->
+	<!-- findShop -->
+	<select id="findShop" resultType="cn.tedu.ssm.entity.Shoppnging">
+	SELECT
+		*
+	FROM
+		t_goods
+	ORDER BY
+		price
+	</select>
+	
+	<!-- 回填收藏 -->
+	<!-- showCollectShop -->
+	<select id="showCollectShop" resultType="cn.tedu.ssm.entity.Shoppnging">
+	SELECT
+		*
+	FROM
+		t_goods
+	WHERE
+		status=#{status}
+	AND
+		uid=#{uid}
+	</select>
+	
+	<!-- 修改为收藏0 -->
+	<!--addCollect  -->
+	<update id="addCollect">
+	UPDATE
+		t_goods
+	SET
+		status=#{status},
+		uid=#{uid}	
+	WHERE
+		id=#{id}
+	</update>
+	
+	<!-- 回填订单信息页面 -->
+	<!-- findByidShop -->
+	<select id="findByidShop" resultType="cn.tedu.ssm.entity.Shoppnging">
+	SELECT
+		*
+	FROM
+		t_goods
+	WHERE
+		id
+	IN(
+	<foreach collection="array"  item="item" separator=",">
+		#{item}
+	</foreach>
+	)
+	ORDER BY
+		FIELD(id,
+		<foreach collection="array"  item="item" separator=",">
+		#{item}
+	</foreach>
+		)
+	</select>
+</mapper>
+
+

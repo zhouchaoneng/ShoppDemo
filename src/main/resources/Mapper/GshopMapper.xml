@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 持久层接口包名，加接口名 -->
+<mapper namespace="cn.tedu.ssm.mapper.GshopMapper">
+	<!--添加购物车  -->
+	<!--addGShop  -->
+	<insert id="addGShop">
+	INSERT INTO
+		G_shop(
+		uid,gid)
+	VALUES(
+		#{uid},#{gid})
+    </insert>
+	
+	<!-- 显示购物车数据 -->
+	<!-- "showGshop" -->
+	<select id="showGshop" resultType="cn.tedu.ssm.entity.Shoppnging">
+	SELECT
+		g.*
+	FROM
+		t_goods g
+	JOIN
+		G_shop s
+	ON
+		g.id = s.gid
+	WHERE
+		s.uid=#{uid}
+	</select>
+	
+	 <!-- 判断是否存在同样商品 -->
+	<!-- "findAid" -->
+	<select id="findAid" resultType="java.lang.Integer">
+	SELECT
+		gid
+	FROM
+		G_shop
+	WHERE
+		gid=#{gid}
+	AND
+		uid=#{uid}
+	</select>
+	
+	<!--删除指定的gid商品  -->
+	<!-- deleteGshop -->
+	<delete id="deleteGshop">
+	DELETE
+	FROM
+		G_shop
+	WHERE
+		gid=#{gid}
+	</delete>
+	
+	<!--批量删除  -->
+	<!-- deletesShop -->
+	<delete id="deletesShop">
+	DELETE
+	FROM
+		G_shop
+	WHERE
+		gid
+	IN(
+		<foreach collection="array"  item="item" separator=",">
+		#{item}
+	</foreach>
+	)
+	</delete>
+</mapper>
+
+
